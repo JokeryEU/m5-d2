@@ -40,6 +40,7 @@ class students extends React.Component {
       surname: "",
       email: "",
       dateofbirth: "",
+      id: "",
     },
   };
 
@@ -68,7 +69,7 @@ class students extends React.Component {
         alert("Student info edited");
         this.getExp();
         this.setState({
-          body: {},
+          body: { name: "", surname: "", email: "", dateofbirth: "", id: "" },
         });
       } else {
         alert("You failed this edit");
@@ -81,9 +82,9 @@ class students extends React.Component {
     try {
       let response = await fetch(`https://localhost:3001/students/` + id, {
         method: "DELETE",
-        headers: {
-          // Authorization: "Bearer " + localStorage.getItem("token"),
-        },
+        // headers: {
+        //   Authorization: "Bearer " + localStorage.getItem("token"),
+        // },
       });
       if (response.ok) {
         alert("Student info deleted");
@@ -246,7 +247,7 @@ class students extends React.Component {
         },
       });
       if (response.ok) {
-        alert("Studen info ADDED");
+        alert("Student info ADDED");
         this.getExp();
         this.setState({
           body: {},
@@ -421,7 +422,7 @@ class students extends React.Component {
               }}
             >
               <div>
-                <ListGroup>
+                {/* <ListGroup>
                   {this.state.suggestedProfiles.length > 0 &&
                     this.state.suggestedProfiles.map((user) => {
                       return (
@@ -441,7 +442,7 @@ class students extends React.Component {
                         </div>
                       );
                     })}
-                </ListGroup>
+                </ListGroup> */}
               </div>
             </div>
           </Col>
@@ -450,7 +451,7 @@ class students extends React.Component {
         <Modal show={this.state.show}>
           <Modal.Header closeButton={this.onHide}>
             <Modal.Title>
-              {this.state.body._id ? "Edit " : "Add "}Student
+              {this.state.body.id ? "Edit " : "Add "}Student
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -458,6 +459,7 @@ class students extends React.Component {
               <Form.Group>
                 <Form.Label>Name</Form.Label>
                 <Form.Control
+                  required
                   onChange={(e) =>
                     this.setState({
                       body: {
@@ -474,6 +476,7 @@ class students extends React.Component {
               <Form.Group>
                 <Form.Label>Surname</Form.Label>
                 <Form.Control
+                  required
                   onChange={(e) =>
                     this.setState({
                       body: { ...this.state.body, surname: e.target.value },
@@ -488,6 +491,7 @@ class students extends React.Component {
                 <Col>
                   <label> Date of birth</label>
                   <input
+                    required
                     onChange={(e) =>
                       this.setState({
                         body: {
@@ -516,6 +520,7 @@ class students extends React.Component {
               <Form.Group>
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
+                  required
                   onChange={(e) =>
                     this.setState({
                       body: { ...this.state.body, email: e.target.value },
