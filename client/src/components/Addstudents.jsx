@@ -40,7 +40,6 @@ class students extends React.Component {
       surname: "",
       email: "",
       dateofbirth: "",
-      id: "",
     },
   };
 
@@ -182,16 +181,13 @@ class students extends React.Component {
       image.append("experience", this.state.file);
 
       try {
-        const response = await fetch(
-          `https://striveschool-api.herokuapp.com/api/profile/${this.state.myProfile._id}/experiences/${id}/picture`,
-          {
-            method: "POST",
-            body: image,
-            headers: {
-              //   Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
+        const response = await fetch(`http://localhost:3001/students/${id}`, {
+          method: "POST",
+          body: image,
+          headers: {
+            //   Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
         if (response.ok) {
           console.log("Experience pic added");
           this.setState({ file: null });
@@ -225,7 +221,7 @@ class students extends React.Component {
   };
   sendingEditedExpAndPic = (id) => {
     this.editExp(id);
-    // this.uploadExpPic(id);
+    this.uploadExpPic(id);
   };
   handleShow = () => {
     this.setState({ show: true });
@@ -249,7 +245,7 @@ class students extends React.Component {
         alert("Student info ADDED");
         this.getExp();
         this.setState({
-          body: {},
+          body: { name: "", surname: "", email: "", dateofbirth: "" },
         });
       } else {
         alert("You failed this add");
@@ -542,8 +538,8 @@ class students extends React.Component {
                   type="text"
                   placeholder="area"
                 />
-              </Form.Group>
-              <Form.Group>
+              </Form.Group> */}
+              {/* <Form.Group>
                 <Form.File
                   onChange={(e) =>
                     this.setState({

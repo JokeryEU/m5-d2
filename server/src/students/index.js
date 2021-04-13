@@ -48,13 +48,23 @@ router.post("/", (req, res) => {
   const students = JSON.parse(fileAsAString);
 
   const newStudent = req.body;
-  newStudent.id = uniqid();
 
-  students.push(newStudent);
+  const existingEmailFilter = students.filter(
+    (student) => student.email.toLowerCase() === newStudent.email.toLowerCase()
+  );
 
-  fs.writeFileSync(studentsJSONPath, JSON.stringify(students));
+  if (existingEmailFilter.length === 0) {
+    newStudent.id = uniqid();
 
-  res.status(201).send({ id: newStudent.id });
+    students.push(newStudent);
+
+    fs.writeFileSync(studentsJSONPath, JSON.stringify(students));
+
+    res.status(201).send({ id: newStudent.id });
+  } else {
+    console.log("Duplicated email address");
+    res.status(409).send("This email address is already in use");
+  }
 });
 
 router.put("/:id", (req, res) => {
