@@ -57,7 +57,7 @@ class students extends React.Component {
 
   editExp = async (id) => {
     try {
-      let response = await fetch(`https://localhost:3001/students/` + id, {
+      let response = await fetch(`http://localhost:3001/students/` + id, {
         method: "PUT",
         body: JSON.stringify(this.state.body),
         headers: {
@@ -80,7 +80,7 @@ class students extends React.Component {
   };
   deleteItem = async (id) => {
     try {
-      let response = await fetch(`https://localhost:3001/students/` + id, {
+      let response = await fetch(`http://localhost:3001/students/` + id, {
         method: "DELETE",
         // headers: {
         //   Authorization: "Bearer " + localStorage.getItem("token"),
