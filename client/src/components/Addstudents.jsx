@@ -2,7 +2,7 @@ import React from "react";
 import {
   Col,
   Row,
-  Card,
+  //   Card,
   Container,
   ListGroup,
   Modal,
@@ -142,7 +142,7 @@ class students extends React.Component {
   getExp = async (id) => {
     try {
       if (id) {
-        let response = await fetch(`http://localhost:3001/students` + id, {
+        let response = await fetch(`http://localhost:3001/students/` + id, {
           headers: {
             //   Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -157,7 +157,7 @@ class students extends React.Component {
           console.log(this.state.body);
         }
       } else {
-        let response = await fetch(`http://localhost:3001/students`, {
+        let response = await fetch(`http://localhost:3001/students/`, {
           headers: {
             //   Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -237,7 +237,7 @@ class students extends React.Component {
   postExp = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch(`http://localhost:3001/students`, {
+      let response = await fetch(`http://localhost:3001/students/`, {
         method: "POST",
         body: JSON.stringify(this.state.body),
         headers: {
@@ -557,14 +557,14 @@ class students extends React.Component {
             <Button variant="secondary" onClick={() => this.onHide()}>
               Close
             </Button>
-            {this.state.body._id ? (
+            {this.state.body.id ? (
               <div></div>
             ) : (
               <Button variant="primary" onClick={(e) => this.postExp(e)}>
                 Save
               </Button>
             )}
-            {this.state.body._id ? (
+            {this.state.body.id ? (
               <Button
                 variant="primary"
                 onClick={() => this.sendingEditedExpAndPic(this.state.body.id)}
