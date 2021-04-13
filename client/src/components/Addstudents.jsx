@@ -115,7 +115,6 @@ class students extends React.Component {
   //       console.log(error);
   //     }
   //   };
-
   //   fetchMe = async () => {
   //     const url =
   //       "https://striveschool-api.herokuapp.com/api/profile/" +
