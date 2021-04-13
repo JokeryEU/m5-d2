@@ -157,7 +157,7 @@ class students extends React.Component {
           console.log(this.state.body);
         }
       } else {
-        let response = await fetch(`localhost:3001/students`, {
+        let response = await fetch(`http://localhost:3001/students`, {
           headers: {
             //   Authorization: "Bearer " + localStorage.getItem("token"),
           },
@@ -225,7 +225,7 @@ class students extends React.Component {
   };
   sendingEditedExpAndPic = (id) => {
     this.editExp(id);
-    this.uploadExpPic(id);
+    // this.uploadExpPic(id);
   };
   handleShow = () => {
     this.setState({ show: true });
@@ -237,7 +237,7 @@ class students extends React.Component {
   postExp = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch(`localhost:3001/students`, {
+      let response = await fetch(`http://localhost:3001/students`, {
         method: "POST",
         body: JSON.stringify(this.state.body),
         headers: {
@@ -246,13 +246,13 @@ class students extends React.Component {
         },
       });
       if (response.ok) {
-        alert("Experiences ADDED");
+        alert("Studen info ADDED");
         this.getExp();
         this.setState({
           body: {},
         });
       } else {
-        alert("You failed your edit");
+        alert("You failed this add");
       }
     } catch (error) {
       console.log(error);
@@ -334,7 +334,7 @@ class students extends React.Component {
               </div>
 
               {this.state.experiences.map((experience) => (
-                <div className="mt-3 " key={experience._id}>
+                <div className="mt-3 " key={experience.id}>
                   <div className="experienceContainer rope">
                     {/* <img src={experience.image} alt="No pic added" /> */}
                     <div>
@@ -343,21 +343,19 @@ class students extends React.Component {
                           {experience.name} {experience.surname}
                         </strong>
                       </div>
-                      <div>${experience.email}</div>
+                      <div>{experience.email}</div>
                     </div>
                     <div className="text-muted dates">
-                      <p>
-                        <h6 style={{ color: "black" }}>From :</h6>
-                        {moment(experience.dateofbirth).format("Do MMMM YYYY")}
-                        {/* {" "} */}
-                        {/* <h6 style={{ color: "black" }}>To:</h6>{" "}
+                      <h6 style={{ color: "black" }}>Birthday</h6>
+                      {moment(experience.dateofbirth).format("Do MMMM YYYY")}
+                      {/* {" "} */}
+                      {/* <h6 style={{ color: "black" }}>To:</h6>{" "}
                         {moment(experience.endDate).format("Do MMMM YYYY")} */}
-                      </p>
                     </div>
                     <div>
                       <button
                         onClick={() =>
-                          this.fetchDataAndShowModal(experience._id)
+                          this.fetchDataAndShowModal(experience.id)
                         }
                         className="editButton"
                       >
@@ -365,7 +363,7 @@ class students extends React.Component {
                       </button>
                       <button
                         className="delButton"
-                        onClick={() => this.deleteItem(experience._id)}
+                        onClick={() => this.deleteItem(experience.id)}
                       >
                         <TiDeleteOutline />
                       </button>
@@ -569,7 +567,7 @@ class students extends React.Component {
             {this.state.body._id ? (
               <Button
                 variant="primary"
-                onClick={() => this.sendingEditedExpAndPic(this.state.body._id)}
+                onClick={() => this.sendingEditedExpAndPic(this.state.body.id)}
               >
                 Edit
               </Button>

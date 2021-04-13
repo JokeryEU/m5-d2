@@ -28,17 +28,15 @@ router.get("/", (req, res) => {
   res.send(fileAsAJSON);
 });
 
-router.get("/:identifier", (req, res) => {
-  console.log("UNIQUE IDENTIFIER: ", req.params.identifier);
+router.get("/:id", (req, res) => {
+  console.log("UNIQUE id: ", req.params.id);
   const fileAsABuffer = fs.readFileSync(studentsJSONPath);
 
   const fileAsAString = fileAsABuffer.toString();
 
   const students = JSON.parse(fileAsAString);
 
-  const student = students.find(
-    (s) => s.ID === parseInt(req.params.identifier)
-  );
+  const student = students.find((s) => s.id === req.params.id);
   res.send(student);
 });
 
@@ -50,13 +48,13 @@ router.post("/", (req, res) => {
   const students = JSON.parse(fileAsAString);
 
   const newStudent = req.body;
-  newStudent.ID = uniqid();
+  newStudent.id = uniqid();
 
   students.push(newStudent);
 
   fs.writeFileSync(studentsJSONPath, JSON.stringify(students));
 
-  res.status(201).send({ id: newStudent.ID });
+  res.status(201).send({ id: newStudent.id });
 });
 
 router.put("/:id", (req, res) => {
@@ -67,11 +65,11 @@ router.put("/:id", (req, res) => {
   const students = JSON.parse(fileAsAString);
 
   const newStudentsArray = students.filter(
-    (student) => student.ID !== req.params.id
+    (student) => student.id !== req.params.id
   );
 
   const modifiedUser = req.body;
-  modifiedUser.ID = req.params.id;
+  modifiedUser.id = req.params.id;
 
   newStudentsArray.push(modifiedUser);
 
@@ -88,7 +86,7 @@ router.delete("/:id", (req, res) => {
   const students = JSON.parse(fileAsAString);
 
   const newStudentsArray = students.filter(
-    (student) => student.ID !== req.params.id
+    (student) => student.id !== req.params.id
   );
 
   fs.writeFileSync(studentsJSONPath, JSON.stringify(newStudentsArray));
